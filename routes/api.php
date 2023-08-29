@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\API\DataUnitController;
+use App\Http\Controllers\API\DataPegawaiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ApiAdminController;
+use App\Http\Middleware\IsAdminApi;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +19,30 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::prefix('v1')->middleware('auth:api')->group(function() {
-    Route::post('/login', [AuthController::class, 'login_action'])->withoutMiddleware('auth:api');
+Route::post('/login', [AuthController::class, 'login_action']);
+Route::post('/ubah-password', [AuthController::class, 'action_lupa_password']);
+Route::prefix('v1')->middleware(IsAdminApi::class)->group(function() {
+
+    //unit
+    Route::get('/data_unit', [DataUnitController::class, 'index']);
+    Route::post('/simpan-unit', [DataUnitController::class, 'store']);
+    Route::post('/update-unit', [DataUnitController::class, 'update']);
+    Route::get('/hapus-unit/{id}', [DataUnitController::class, 'destroy']);
+
+    //pegawai
+    Route::get('/data-pegawai', [DataPegawaiController::class, 'index']);
+    Route::get('/data-unit-select', [DataPegawaiController::class, 'get_unit']);
+    Route::get('/data-pegawai-edit/{id}', [DataPegawaiController::class, 'get_edit']);
+    Route::post('/simpan-pegawai', [DataPegawaiController::class, 'store']);
+    Route::post('/update-pegawai', [DataPegawaiController::class, 'update']);
+    Route::post('/nonaktif-pegawai', [DataPegawaiController::class, 'nonaktif']);
+    Route::post('/aktif-pegawai', [DataPegawaiController::class, 'aktifkan']);
+    Route::get('/hapus-pegawai/{id}', [DataPegawaiController::class, 'destroy']);
+
+    //myprofile
+    Route::get('/data-profile/{id}', [DataPegawaiController::class, 'get_profile']);
+    Route::post('/update-profile', [DataPegawaiController::class, 'update_profile']);
+
 });
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

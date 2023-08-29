@@ -74,11 +74,24 @@
       </a>
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#about">Absen Masuk</a></li>
-          <li><a href="#services">Absen Keluar</a></li>
-          <li><a href="#portfolio">Izin</a></li>
-          <li><a class="btn btn-primary" style="color: #FFF" href="{{ url('/login') }}">Masuk</a></li>
+            @if (!empty(auth()->user()->username))
+                <li><a href="{{ url('/user') }}">Home</a></li>
+            @else
+                <li><a href="{{ url('/') }}">Home</a></li>
+            @endif
+            <li><a href="{{ url('/user/absen-masuk') }}">Absen Masuk</a></li>
+            <li><a href="#services">Absen Keluar</a></li>
+            <li><a href="#portfolio">Izin</a></li>
+            @if (!empty(auth()->user()->username))
+                <li class="dropdown"><a class="btn btn-primary" style="color: #FFF" href=""><span>{{ auth()->user()->username }}</span></a>
+                    <ul>
+                        {{-- <li><a href="#">Profile Saya</a></li> --}}
+                        <li><a href="{{ url('/logout-user') }}">Log Out</a></li>
+                        </ul>
+                </li>
+            @else
+                <li><a class="btn btn-primary" style="color: #FFF" href="{{ url('/login') }}">Masuk</a></li>
+            @endif
         </ul>
       </nav><!-- .navbar -->
 
@@ -125,6 +138,7 @@
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="{{ url('pages/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ url('pages/assets/vendor/aos/aos.js') }}"></script>
   <script src="{{ url('pages/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
@@ -135,7 +149,9 @@
 
   <!-- Template Main JS File -->
   <script src="{{ url('pages/assets/js/main.js') }}"></script>
+  <script src="{{ url('pages/sweetalert2-all.js') }}"></script>
 
+  @yield('js')
 </body>
 
 </html>

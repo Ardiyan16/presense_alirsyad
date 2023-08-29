@@ -12,4 +12,10 @@ class PagesController extends Controller
         return view('pages.home', $var);
     }
 
+    public function absen_masuk()
+    {
+        $var['title'] = 'Absen Masuk';
+        return view('pages.absen_masuk', $var);
+    }
+
 }

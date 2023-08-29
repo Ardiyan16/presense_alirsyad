@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'full_name', 'username', 'email', 'password', 'unit_id', 'status', 'role', 'remember_token',
     ];
 
     /**
@@ -37,4 +37,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    static public function findToken($token)
+    {
+        return self::where('remember_token',$token)->firstOrFail();
+    }
 }

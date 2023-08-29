@@ -19,7 +19,7 @@
             <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="icon-box">
                 <div class="icon"><i class="fa-solid fa-right-to-bracket"></i></div>
-                <h4 class="title"><a href="" class="stretched-link">Absen Masuk</a></h4>
+                <h4 class="title"><a href="{{ url('/user/absen-masuk') }}" class="stretched-link">Absen Masuk</a></h4>
             </div>
             </div>
             <!--End Icon Box -->

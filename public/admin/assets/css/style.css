@@ -1,6 +1,6 @@
 /*
 Author       : Dreamguys
-最新最全最好的Bootstrap模板：http://www.bootstrapmb.com
+锟斤拷锟斤拷锟斤拷全锟斤拷玫锟紹ootstrap模锟藉：http://www.bootstrapmb.com
 Version      : 1.0
 */
 
@@ -104,14 +104,14 @@ a:hover,
 a:active,
 a:focus {
 	text-decoration: none;
-	color: #009ce7;
+	color: #028000;
 	outline: none;
 }
 .form-control {
 	border-radius: 0;
 	box-shadow: none;
 	padding: 0.469rem 0.75rem;
-	border-color: #eaeaea;
+	border-color: #028000;
 	font-size: 14px;
 	min-height: 40px;
 }
@@ -175,12 +175,13 @@ textarea.form-control {
 
 .table {
 	color: #000;
-	border: 1px solid #f0f0f0;
+	border: 1px solid #028000;
 }
 .table.table-white {
 	background-color: #fff;
 }
 .table > tbody > tr > td {
+    border: 1px solid #028000;
 	font-weight: 300;
 }
 .table-striped > tbody > tr:nth-of-type(2n + 1) {
@@ -480,8 +481,8 @@ table.table td h2 span {
 	color: #fff;
 }
 .btn-success {
-	background-color: #55ce63;
-	border: 1px solid #55ce63
+	background-color: #028000;
+	border: 1px solid #028000
 }
 .btn-success:hover,
 .btn-success:focus,
@@ -640,7 +641,8 @@ table.table td h2 span {
 	border-radius: 0;
 }
 .table.dataTable {
-	border-collapse: collapse !important;
+    border-color: #028000;
+	/* border-collapse: collapse !important; */
 }
 textarea.form-control {
 	height: auto;
@@ -702,7 +704,7 @@ textarea.form-control {
 -----------------------*/
 
 .header {
-	background-color: #009efb;
+	background-color: #028000;
 	left: 0;
 	position: fixed;
 	right: 0;
@@ -854,10 +856,10 @@ textarea.form-control {
 	padding: 0 20px;
 }
 .sidebar-menu li a:hover {
-	color: #009efb;
+	color: #028000;
 }
 .sidebar-menu li.active a {
-	color: #009efb;
+	color: #028000;
 	background-color: #f3f3f3;
 }
 .menu-title {
@@ -1037,6 +1039,7 @@ textarea.form-control {
 	-webkit-transition: all 0.4s ease;
 	-moz-transition: all 0.4s ease;
 	transition: all 0.4s ease;
+    background-color: #ced4da;
 }
 .page-wrapper > .content {
 	padding: 30px;
@@ -4020,7 +4023,7 @@ blockquote p {
 
 /*-----------------
 	33. UI Kit
-    最新最全最好的Bootstrap模板：http://www.bootstrapMB.com
+    锟斤拷锟斤拷锟斤拷全锟斤拷玫锟紹ootstrap模锟藉：http://www.bootstrapMB.com
 -----------------------*/
 
 .pagination-box .pagination {
@@ -4914,4 +4917,9 @@ blockquote p {
 		margin: 0 auto;
 		margin-bottom: 10px;
 	}
+}
+
+
+div.dataTables_wrapper div.dataTables_filter input {
+    border-color: 1px solid #028000;
 }

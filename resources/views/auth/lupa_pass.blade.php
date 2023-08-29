@@ -39,7 +39,7 @@
 					</span>
 
 					<span class="login100-form-title p-b-34 p-t-27">
-						Log in
+						Lupa Password
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
@@ -48,24 +48,22 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100 password" type="password" name="password" placeholder="Password">
+						<input class="input100 password" type="password" name="password" placeholder="Password Baru">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 
-					<div class="contact100-form-checkbox">
-						<input class="input-checkbox100 form-checkbox" id="ckb1" type="checkbox" name="remember-me">
-						<label class="label-checkbox100" for="ckb1">
-							Lihat Password
-						</label>
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input class="input100 konfir_password" type="password" name="konfirmasi_password" placeholder="Konfirmasi Password">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn submit-login">Login</button>
+						<button class="login100-form-btn submit-login">Ubah Password</button>
 					</div>
 
                     <div class="text-center p-t-90">
-						<a class="txt1" href="{{ url('/lupa-password') }}">
-							Lupa Password?
+						<a class="txt1" href="{{ url('/login') }}">
+							Sudah memiliki akun, silahkan log in
 						</a>
 					</div>
 
@@ -99,21 +97,22 @@
     <script src="{{ url('pages/sweetalert2-all.js') }}"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('.form-checkbox').click(function() {
-                if ($(this).is(':checked')) {
-                    $('.password').attr('type', 'text');
-                } else {
-                    $('.password').attr('type', 'password');
-                }
-            });
-        });
+        // $(document).ready(function() {
+        //     $('.form-checkbox').click(function() {
+        //         if ($(this).is(':checked')) {
+        //             $('.password').attr('type', 'text');
+        //         } else {
+        //             $('.password').attr('type', 'password');
+        //         }
+        //     });
+        // });
 
         $(document).ready(function() {
             $(document).on('click', '.submit-login', function() {
-                let email = $('.email').val(),
-                    password = $('.password').val(),
-                    token = $("meta[name='csrf-token']").attr("content");;
+                let email = $('.email').val();
+                    password = $('.password').val();
+                    konfir_password = $('.konfir_password').val();
+                    token = $("meta[name='csrf-token']").attr("content");
 
                 if(email == "") {
 
@@ -131,10 +130,26 @@
                         text: 'Password harus diisi'
                     });
 
+                } else if(konfir_password == "") {
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan!',
+                        text: 'Konfirmasi password harus diisi'
+                    });
+
+                } else if(password != konfir_password) {
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Peringatan!',
+                        text: 'Konfirmasi password tidak sesuai'
+                    });
+
                 } else {
 
                     $.ajax({
-                        url: '{{url("api/login")}}',
+                        url: '{{url("api/ubah-password")}}',
                         type: 'POST',
                         dataType: "JSON",
                         data: {
@@ -147,25 +162,20 @@
 
                                 Swal.fire({
                                     icon: 'success',
-                                    title: 'Login Berhasil!',
+                                    title: 'Berhasil!',
                                     text: res.message,
                                     timer: 3000,
                                     showCancelButton: false,
                                     showConfirmButton: false
                                 })
                                 .then (function() {
-                                    set_cookie('ALD_SESSION',res.remember_token)
-                                    if(res.redirect == 'admin') {
-                                        window.location.href = "{{ url('/dashboard') }}";
-                                    } else {
-                                        window.location.href = "{{ url('/user') }}";
-                                    }
+                                    window.location.href = "{{ url('/login') }}";
                                 });
 
                             } else {
                                 Swal.fire({
                                     icon: 'warning',
-                                    title: 'Login Gagal!',
+                                    title: 'Gagal!',
                                     text: res.message
                                 });
                             }
@@ -175,6 +185,8 @@
                 }
             })
         })
+
+       
 
     </script>
 
