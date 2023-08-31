@@ -15,13 +15,15 @@
         </div>
 
         <div class="col-lg-12">
-            <form action="#">
+            {{-- <form action="#"> --}}
                 <div class="row">
                     <div class="col-md-2 form-group">
                         <button class="btn btn-primary" type="button" onclick="getLocation()">Lokasi</button>
                     </div>
                     <div class="col-md-5 form-group mt-3 mt-md-0">
+                        {{-- <input type="file" class="form-control" id="" placeholder="Longitude" disabled> --}}
                         <input type="text" class="form-control" id="longitude" placeholder="Longitude" disabled>
+                        <input type="hidden" class="form-control" id="presence_status" value="{{ $jenis_lokasi }}" placeholder="Longitude" disabled>
                     </div>
                     <div class="col-md-5 form-group mt-3 mt-md-0">
                         <input type="text" class="form-control" id="latitude" placeholder="Latitude" disabled>
@@ -29,7 +31,7 @@
                 </div>
                 <br>
                 <div class="text-center"><button type="submit" class="btn btn-primary btn-simpan-absen">Simpan</button></div>
-            </form>
+            {{-- </form> --}}
         </div><!-- End Contact Form -->
 
     </div>
@@ -91,27 +93,82 @@
             }
         }
 
-        $(document).ready(function() {
+    </script>
 
-            $(document).on('click', '.btn-simpan-absen', function() {
-                let longitude = $('#longitude').val();
-                let latitude = $('#latitude').val();
+    <script>
+            $(document).ready(function() {
 
-                if(longitude == "" || latitude == "") {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Peringatan!',
-                        text: 'silahkan klik button lokasi terlebih dahulu'
-                    });
-                } else {
+                $(document).on('click', '.btn-simpan-absen', function() {
+                    let user_id = {{ auth()->user()->id }};
+                    let presence_status = $('#presence_status').val();
+                    let longitude = $('#longitude').val();
+                    let latitude = $('#latitude').val();
 
-                    $.ajax({
-                        url:
-                    })
 
-                }
-            })
+                    if(longitude == "" || latitude == "") {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Peringatan!',
+                            text: 'silahkan klik button lokasi terlebih dahulu'
+                        });
+                    } else {
 
-        });
+                        $.ajax({
+                            url: '{{ url("/api/v1/simpan-absen-masuk") }}',
+                            headers: {
+                                'Authorization': 'Bearer '+get_cookie('ALD_SESSION')
+                            },
+                            type: 'POST',
+                            dataType: "JSON",
+                            data: {
+                                "user_id": user_id,
+                                "presence_status": presence_status,
+                                "longitude": longitude,
+                                "latitude": latitude
+                            },
+
+                            success: function(res) {
+
+                                if(res.status) {
+
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil!',
+                                        text: res.message,
+                                        timer: 2000,
+                                        showCancelButton: false,
+                                        showConfirmButton: false
+                                    })
+                                    .then (function() {
+                                        window.location.href = "{{ url('/user/absen-masuk') }}?jenis_lokasi=" + presence_status;
+                                    });
+
+                                } else {
+
+                                    if(res.info) {
+                                        Swal.fire({
+                                            icon: 'info',
+                                            title: 'Informasi!',
+                                            text: res.message
+                                        });
+
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Gagal!',
+                                            text: res.message
+                                        });
+                                    }
+
+                                }
+
+                            }
+                        })
+
+                    }
+                })
+
+            });
+
     </script>
 @endsection

@@ -109,6 +109,7 @@
         <div class="page-wrapper">
             @yield('content')
         </div>
+
     </div>
     <div class="sidebar-overlay" data-reff=""></div>
     <script src="{{ url('admin/assets/js/jquery-3.2.1.min.js') }}"></script>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\DataUnitController;
 use App\Http\Controllers\API\DataPegawaiController;
+use App\Http\Controllers\API\AbsensiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -43,7 +44,15 @@ Route::prefix('v1')->middleware(IsAdminApi::class)->group(function() {
     Route::get('/data-profile/{id}', [DataPegawaiController::class, 'get_profile']);
     Route::post('/update-profile', [DataPegawaiController::class, 'update_profile']);
 
+    //absen masuk
+    Route::post('/simpan-absen-masuk', [AbsensiController::class, 'presence_in']);
+
+    //izin
+    Route::post('/simpan-izin', [AbsensiController::class, 'izin']);
+
 });
+
+
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();

@@ -25,6 +25,7 @@
   <link href="{{ url('pages/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
   <link href="{{ url('pages/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
   <!-- Template Main CSS File -->
   <link href="{{ url('pages/assets/css/main.css') }}" rel="stylesheet">
@@ -44,10 +45,22 @@
         border-radius: 8px;
         color: #028000;
     }
+
+    .select2-selection__rendered {
+        line-height: 40px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 40px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 40px !important;
+    }
 </style>
 
 <body>
-
+    @include('sweetalert::alert')
   <!-- ======= Header ======= -->
   <section id="topbar" class="topbar d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
@@ -79,9 +92,9 @@
             @else
                 <li><a href="{{ url('/') }}">Home</a></li>
             @endif
-            <li><a href="{{ url('/user/absen-masuk') }}">Absen Masuk</a></li>
+            <li><a href="#pilihlokasi" data-bs-toggle="modal">Absen Masuk</a></li>
             <li><a href="#services">Absen Keluar</a></li>
-            <li><a href="#portfolio">Izin</a></li>
+            <li><a href="{{ url('/user/izin') }}">Izin</a></li>
             @if (!empty(auth()->user()->username))
                 <li class="dropdown"><a class="btn btn-primary" style="color: #FFF" href=""><span>{{ auth()->user()->username }}</span></a>
                     <ul>
@@ -111,6 +124,27 @@
     @yield('pages_content')
 
   </main><!-- End #main -->
+  <div class="modal fade" id="pilihlokasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row text-center">
+                    <div class="col-sm-12">
+                        <a href="{{ url('/user/absen-masuk?jenis_lokasi=in_office') }}">
+                            <img src="{{ url('image/dikantor.png') }}" class="image-location-absen" width="350">
+                        </a>
+                        <a href="{{ url('/user/absen-masuk?jenis_lokasi=in_home') }}">
+                            <img src="{{ url('image/dirumah.png') }}" class="image-location-absen" width="350">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            </div>
+        </div>
+    </div>
+  </div>
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
@@ -139,6 +173,7 @@
 
   <!-- Vendor JS Files -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{{ url('assets/plugins/jquery-cookie/index.min.js') }}"></script>
   <script src="{{ url('pages/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ url('pages/assets/vendor/aos/aos.js') }}"></script>
   <script src="{{ url('pages/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
@@ -150,6 +185,8 @@
   <!-- Template Main JS File -->
   <script src="{{ url('pages/assets/js/main.js') }}"></script>
   <script src="{{ url('pages/sweetalert2-all.js') }}"></script>
+  <script src="{{ url('assets/js/main.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   @yield('js')
 </body>

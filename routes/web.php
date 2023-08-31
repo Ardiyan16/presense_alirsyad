@@ -47,6 +47,8 @@ Route::middleware(IsUser::class)->group(function(){
     Route::prefix('user')->group(function () {
         Route::get('/', [PagesController::class, 'index'])->name('Homeuser');
         Route::get('/absen-masuk', [PagesController::class, 'absen_masuk'])->name('AbsenMasuk');
+        Route::get('/izin', [PagesController::class, 'izin'])->name('Izin');
+        Route::post('/simpan-izin', [PagesController::class, 'simpan_izin']);
     });
 });
 

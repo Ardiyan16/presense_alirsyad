@@ -274,6 +274,10 @@ section {
   .topbar .contact-info i span {
     font-size: 13px;
   }
+
+  .image-location-absen {
+    width: 150px;
+  }
 }
 
 .topbar .contact-info i a {
