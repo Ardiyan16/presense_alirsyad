@@ -22,6 +22,12 @@ class PagesController extends Controller
         return view('pages.absen_masuk', $var);
     }
 
+    public function absen_keluar()
+    {
+        $var['title'] = 'Absen Keluar';
+        return view('pages.absen_keluar', $var);
+    }
+
     public function izin()
     {
         $var['title'] = 'Izin';
@@ -85,6 +91,12 @@ class PagesController extends Controller
 
         Alert::warning('Gagal', 'Data izin gagal disimpan');
         return redirect('/user/izin');
+    }
+
+    public function riwayat_absen()
+    {
+        $var['title'] = 'Riwayat Absen';
+        return view('pages.riwayat', $var);
     }
 
 }

@@ -11,7 +11,7 @@
     <link href="{{ url('image/logopas.png') }}" rel="icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url('admin/assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url('admin/assets/css/font-awesome.min.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ url('admin/assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -93,15 +93,16 @@
                         <li>
                             <a href="{{ url('/dashboard/data-unit') }}"><i class="fa fa-building"></i> <span>Unit Kerja</span></a>
                         </li>
-                        <li>
-                            <a href=""><i class="fa fa-calendar"></i> <span>Presensi</span></a>
+                        <li class="submenu">
+                            <a href="#"><i class="fa fa-file-circle-exclamation"></i> <span> Cuti</span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li><a href="{{ url('/dashboard/data-cuti') }}">Cuti Pegawai</a></li>
+                                <li><a href="{{ url('/dashboard/data-jenis-cuti') }}">Jenis Cuti</a></li>
+                            </ul>
                         </li>
-                        {{-- <li>
-                            <a href="schedule.html"><i class="fa fa-calendar-check-o"></i> <span>Doctor Schedule</span></a>
-                        </li>
                         <li>
-                            <a href="departments.html"><i class="fa fa-hospital-o"></i> <span>Departments</span></a>
-                        </li> --}}
+                            <a href="{{ url('/dashboard/data-presensi') }}"><i class="fa fa-calendar"></i> <span>Presensi</span></a>
+                        </li>
                     </ul>
                 </div>
             </div>

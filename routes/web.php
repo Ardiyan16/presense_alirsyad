@@ -37,6 +37,16 @@ Route::middleware(IsAdmin::class)->group(function(){
         Route::get('/data-pegawai', [AdminController::class, 'data_pegawai'])->name('datapegawai');
         Route::get('/tambah-pegawai', [AdminController::class, 'add_pegawai'])->name('addpegawai');
         Route::get('/edit-pegawai', [AdminController::class, 'edit_pegawai'])->name('editpegawai');
+
+        //cuti
+        Route::get('/data-cuti', [AdminController::class, 'data_cuti'])->name('cuti');
+        Route::get('/tambah-cuti', [AdminController::class, 'tambah_cuti'])->name('addcuti');
+        Route::get('/edit-cuti', [AdminController::class, 'edit_cuti'])->name('addcuti');
+        Route::get('/data-jenis-cuti', [AdminController::class, 'data_jenis_cuti'])->name('jeniscuti');
+
+        //presensi
+        Route::get('/data-presensi', [AdminController::class, 'data_presensi'])->name('datapresensi');
+        Route::get('/detail-presensi', [AdminController::class, 'detail_presensi'])->name('detailpresensi');
     });
 
 
@@ -47,8 +57,10 @@ Route::middleware(IsUser::class)->group(function(){
     Route::prefix('user')->group(function () {
         Route::get('/', [PagesController::class, 'index'])->name('Homeuser');
         Route::get('/absen-masuk', [PagesController::class, 'absen_masuk'])->name('AbsenMasuk');
+        Route::get('/absen-keluar', [PagesController::class, 'absen_keluar'])->name('AbsenKeluar');
         Route::get('/izin', [PagesController::class, 'izin'])->name('Izin');
         Route::post('/simpan-izin', [PagesController::class, 'simpan_izin']);
+        Route::get('/riwayat-absen', [PagesController::class, 'riwayat_absen'])->name('RiwayatAbsen');
     });
 });
 

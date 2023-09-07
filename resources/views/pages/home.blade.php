@@ -31,7 +31,7 @@
             <div class="col-sm-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box">
                 <div class="icon"><i class="fa-solid fa-right-from-bracket"></i></div>
-                <h4 class="title"><a href="" class="stretched-link">Absen Pulang</a></h4>
+                <h4 class="title"><a href="{{ url('/user/absen-keluar') }}" class="stretched-link">Absen Pulang</a></h4>
             </div>
             </div>
             <!--End Icon Box -->
@@ -48,7 +48,7 @@
                 <div class="col-sm-3 col-sm-6" data-aos="fade-up" data-aos-delay="500">
                     <div class="icon-box">
                         <div class="icon"><i class="fa-solid fa-history"></i></div>
-                        <h4 class="title"><a href="{{ url('/dashboard-absen') }}" class="stretched-link">Riwayat Absensi</a></h4>
+                        <h4 class="title"><a href="{{ url('user/riwayat-absen') }}" class="stretched-link">Riwayat Absensi</a></h4>
                     </div>
                 </div>
             @else

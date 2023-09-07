@@ -4,6 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Unit;
+use App\Models\User;
+use App\Models\Attendance;
+use App\Models\Permit;
 use Illuminate\Http\Request;
 
 class DataUnitController extends Controller
@@ -109,5 +112,33 @@ class DataUnitController extends Controller
                 'message' => 'Data unit gagal dihapus',
             ]);
         }
+    }
+
+    public function dashboard()
+    {
+        $jumlah_pegawai = User::where('role', 2)->count();
+        $jumlah_absen_masuk = Attendance::where('presence_type', 1)->count();
+        $jumlah_absen_keluar = Attendance::where('presence_type', 2)->count();
+        $jumlah_izin = Permit::count();
+
+        $data = [
+            'jumlah_pegawai' => $jumlah_pegawai,
+            'jumlah_absen_masuk' => $jumlah_absen_masuk,
+            'jumlah_absen_keluar' => $jumlah_absen_keluar,
+            'jumlah_izin' => $jumlah_izin
+        ];
+
+        if($data) {
+            return response([
+                'status' => true,
+                'data'  => $data,
+                'message' => 'Ok'
+            ]);
+        }
+
+        return response([
+            'status' => 'false',
+            'message' => 'failed data'
+        ]);
     }
 }

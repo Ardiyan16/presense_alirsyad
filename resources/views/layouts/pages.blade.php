@@ -24,6 +24,7 @@
   <link href="{{ url('pages/assets/vendor/aos/aos.css') }}" rel="stylesheet">
   <link href="{{ url('pages/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
   <link href="{{ url('pages/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -65,8 +66,8 @@
   <section id="topbar" class="topbar d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
       <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
-        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">lpp.alirsyadjember@gmail.com</a></i>
+        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+62 812-3234-2727</span></i>
       </div>
       <div class="social-links d-none d-md-flex align-items-center">
         <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
@@ -80,7 +81,7 @@
   <header id="header" class="header d-flex align-items-center">
 
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="{{ url('/') }}" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <img src="{{ url('image/Logo LPP Web.png') }}" alt="">
         {{-- <h1>Impact<span>.</span></h1> --}}
@@ -93,8 +94,9 @@
                 <li><a href="{{ url('/') }}">Home</a></li>
             @endif
             <li><a href="#pilihlokasi" data-bs-toggle="modal">Absen Masuk</a></li>
-            <li><a href="#services">Absen Keluar</a></li>
+            <li><a href="{{ url('/user/absen-keluar') }}">Absen Pulang</a></li>
             <li><a href="{{ url('/user/izin') }}">Izin</a></li>
+            <li><a href="{{ url('/user/riwayat-absen') }}">Riwayat Absensi</a></li>
             @if (!empty(auth()->user()->username))
                 <li class="dropdown"><a class="btn btn-primary" style="color: #FFF" href=""><span>{{ auth()->user()->username }}</span></a>
                     <ul>
@@ -186,6 +188,8 @@
   <script src="{{ url('pages/assets/js/main.js') }}"></script>
   <script src="{{ url('pages/sweetalert2-all.js') }}"></script>
   <script src="{{ url('assets/js/main.js') }}"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   @yield('js')

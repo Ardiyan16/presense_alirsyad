@@ -165,7 +165,7 @@ section {
   right: 15px;
   bottom: -15px;
   z-index: 99999;
-  background: var(--color-secondary);
+  background: var(--color-primary);
   width: 44px;
   height: 44px;
   border-radius: 50px;
@@ -976,7 +976,7 @@ section {
 
 .services .service-item {
   padding: 40px;
-  background: #fff;
+  background: #adb5bd;
   height: 100%;
   border-radius: 10px;
 }
@@ -1034,7 +1034,7 @@ section {
 }
 
 .services .service-item:hover .icon:before {
-  background: #00b6a1;
+  background: #028000;
 }
 
 .services .service-item:hover h3 {

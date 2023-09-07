@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -300,6 +300,7 @@ class DataPegawaiController extends Controller
 
     public function update_profile(Request $request)
     {
+        
         $validator = Validator::make($request->all(),[
             'full_name'     => 'required',
             'name'          => 'required',

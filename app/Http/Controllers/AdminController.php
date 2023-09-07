@@ -43,4 +43,42 @@ class AdminController extends Controller
         return view('admin.unit', $var);
     }
 
+    public function data_cuti()
+    {
+        $var['title'] = 'Data Cuti';
+        return view('admin.cuti.cuti', $var);
+    }
+
+    public function tambah_cuti()
+    {
+        $var['title'] = 'Tambah Cuti Pegawai';
+        return view('admin.cuti.add_cuti', $var);
+    }
+
+    public function edit_cuti(Request $request)
+    {
+        $var['title'] = 'Edit Cuti Pegawai';
+        $var['id_cuti'] = $request->get('id');
+        return view('admin.cuti.edit_cuti', $var);
+    }
+
+    public function data_jenis_cuti()
+    {
+        $var['title'] = 'Data Jenis Cuti';
+        return view('admin.cuti.jenis_cuti', $var);
+    }
+
+    public function data_presensi()
+    {
+        $var['title'] = 'Data Absensi Karyawan';
+        return view('admin.presensi.presensi', $var);
+    }
+
+    public function detail_presensi(Request $request)
+    {
+        $var['title'] = 'Data Detail Absensi';
+        $var['user_id'] = $request->get('user_id');
+        return view('admin.presensi.detail', $var);
+    }
+
 }
