@@ -13,11 +13,13 @@
                 <div class="card-block">
                     <h6 class="card-title text-bold">List Data Unit</h6>
                     <div class="table-responsive">
-                        <table class="table table-stripped" id="data_unit">
+                        <table class="table table-stripped table-data-unit" id="data_unit">
                             <thead>
                                 <tr>
-                                    {{-- <th>No</th> --}}
+                                    <th>No</th>
                                     <th>Unit</th>
+                                    <th>Waktu Masuk</th>
+                                    <th>Waktu Pulang</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
@@ -43,6 +45,10 @@
                 <div class="form-group">
                     <label>Unit Kerja</label>
                     <input type="text" class="form-control" id="unit_kerja" name="unit">
+                    <label>Waktu Masuk</label>
+                    <input type="time" class="form-control" id="time_in" name="time_in">
+                    <label>Waktu Keluar</label>
+                    <input type="time" class="form-control" id="time_out" name="time_out">
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm simpan-unit"><i class="fa fa-save"></i> Simpan</button>
                 {{-- </form> --}}
@@ -66,25 +72,40 @@
 <script>
 
     $(document).ready(function() {
-        var tabel = $('#data_unit').DataTable({
-            ajax: {
-                url: '{{ url('/api/v1/data_unit') }}',
-                headers: {
-                    'Authorization': 'Bearer '+get_cookie('ALD_SESSION')
-                }
-            },
-            serverSide: true,
-            processing: true,
-            aaSorting:[[0,"desc"]],
-            columns: [
-                {data: 'unit', name: 'unit'},
-                {data: null, render: res => {
-                    return `
-                        <button href="" class="btn btn-primary btn-sm btn-edit-unit" data-id="${res.id}" data-unit="${res.unit}" style="color: #FFF;" title="edit"><i class="fa fa-edit"></i></button>
-                        <button href="" class="btn btn-danger btn-sm btn-hapus-unit" data-id="${res.id}" style="color: #FFF;" title="hapus"><i class="fa fa-trash"</i></button>`
-                }},
-            ]
-        })
+
+        function load_tabel() {
+
+            $('table.table-data-unit').DataTable().destroy();
+            $('table.table-data-unit').DataTable({
+                ajax: {
+                    url: '{{ url('/api/v1/data_unit') }}',
+                    headers: {
+                        'Authorization': 'Bearer '+get_cookie('ALD_SESSION')
+                    }
+                },
+                serverSide: true,
+                processing: true,
+                aaSorting:[[0,"desc"]],
+                columns: [
+                    {
+                        data: null,
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1 + '.';
+                        }
+                    },
+                    {data: 'unit', name: 'unit'},
+                    {data: 'time_in', name: 'time_in'},
+                    {data: 'time_out', name: 'time_out'},
+                    {data: null, render: res => {
+                        return `
+                            <button href="" class="btn btn-primary btn-sm btn-edit-unit" data-id="${res.id}" data-unit="${res.unit}" data-time_in="${res.time_in}" data-time_out="${res.time_out}" style="color: #FFF;" title="edit"><i class="fa fa-edit"></i></button>
+                            <button href="" class="btn btn-danger btn-sm btn-hapus-unit" data-id="${res.id}" style="color: #FFF;" title="hapus"><i class="fa fa-trash"</i></button>`
+                    }},
+                ]
+            })
+        }
+
+        load_tabel();
 
 
         $(document).on('click', '.btn-modal-tambah', function() {
@@ -94,6 +115,8 @@
 
         $(document).on('click', '.simpan-unit', function() {
             let unit = $('#unit_kerja').val();
+            let time_in = $('#time_in').val();
+            let time_out = $('#time_out').val();
 
             if(unit == "") {
                 Swal.fire({
@@ -111,6 +134,8 @@
                     dataType: "JSON",
                     data: {
                         "unit": unit,
+                        "time_in": time_in,
+                        "time_out": time_out
                     },
                     success: function(res) {
 
@@ -125,7 +150,8 @@
                                 showConfirmButton: false
                             })
                             .then (function() {
-                                window.location.href = "{{ url('/dashboard/data-unit') }}";
+                                $('#tambah_unit').modal('hide');
+                                load_tabel();
                             });
 
                         } else {
@@ -144,6 +170,8 @@
         $(document).on("click", ".btn-edit-unit", function() {
             let id = $(this).attr('data-id');
             let unit = $(this).attr('data-unit');
+            let time_in = $(this).attr('data-time_in');
+            let time_out = $(this).attr('data-time_out');
 
             $('.modal#ModalUnit').modal('show');
 
@@ -159,6 +187,10 @@
                         <label>Unit Kerja</label>
                         <input type="hidden" name="id" id="id_unit" value="${id}">
                         <input type="text" class="form-control" value="${unit}" id="val_unit_kerja" name="unit">
+                        <label>Waktu Masuk</label>
+                        <input type="time" class="form-control" id="time_in_edit" value="${time_in}" name="time_in">
+                        <label>Waktu Keluar</label>
+                        <input type="time" class="form-control" id="time_out_edit" value="${time_out}" name="time_out">
                     </div>
                     <button type="submit" class="btn btn-primary btn-sm btn-update-unit"><i class="fa fa-save"></i> Simpan</button>
                 </div>
@@ -171,6 +203,8 @@
         $(document).on('click', '.btn-update-unit', function() {
             let id = $('#id_unit').val();
             let unit = $('#val_unit_kerja').val();
+            let time_in = $('#time_in_edit').val();
+            let time_out = $('#time_out_edit').val();
 
             if(unit == "") {
                 Swal.fire({
@@ -190,7 +224,9 @@
                     dataType: "JSON",
                     data: {
                         "id": id,
-                        "unit": unit
+                        "unit": unit,
+                        "time_in": time_in,
+                        "time_out": time_out
                     },
                     success: function(res) {
 
@@ -205,7 +241,8 @@
                                 showConfirmButton: false
                             })
                             .then (function() {
-                                window.location.href = "{{ url('/dashboard/data-unit') }}";
+                                $('.modal#ModalUnit').modal('hide');
+                                load_tabel();
                             });
 
                         } else {

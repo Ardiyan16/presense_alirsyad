@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Models\Permit;
+use Illuminate\Support\Facades\DB;
 
 class AbsensiController extends Controller
 {
@@ -31,6 +32,7 @@ class AbsensiController extends Controller
         $cek_izin = Permit::where([
             ['user_id', '=', $user_id],
             ['date', 'LIKE', "{$hari_ini}%"],
+            ['type_permit', 'tidak hadir'],
         ])->first();
 
         if($cek_absensi) {
@@ -41,7 +43,7 @@ class AbsensiController extends Controller
             ]);
         }
 
-        if($cek_izin->type_permit == 'tidak hadir') {
+        if($cek_izin) {
             return response([
                 'status' => false,
                 'info' => true,
@@ -156,6 +158,7 @@ class AbsensiController extends Controller
         $cek_izin = Permit::where([
             ['user_id', '=', $user_id],
             ['date', 'LIKE', "{$hari_ini}%"],
+            ['type_permit', 'tidak hadir'],
         ])->first();
 
         if(!$cek_absensi) {
@@ -174,11 +177,26 @@ class AbsensiController extends Controller
             ]);
         }
 
-        if($cek_izin->type_permit == 'tidak hadir') {
+        if($cek_izin) {
             return response([
                 'status' => false,
                 'info' => true,
                 'message' => 'Anda sudah melakukan izin tidak hadir, maka tidak dapat melakukan absensi'
+            ]);
+        }
+
+        $cek_jam_kerja = DB::table('users')
+                        ->select('users.*', 'units.unit', 'units.time_in', 'units.time_out')
+                        ->leftJoin('units', 'units.id', '=', 'users.unit_id')
+                        ->where('users.id', $user_id)
+                        ->first();
+
+        $jam_sekarang = date('H:i:s');
+        if($jam_sekarang < $cek_jam_kerja->time_out) {
+            return response([
+                'status' => false,
+                'info' => true,
+                'message' => 'Belum masuk waktu pulang'
             ]);
         }
 

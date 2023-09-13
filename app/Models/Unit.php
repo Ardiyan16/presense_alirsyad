@@ -10,5 +10,7 @@ class Unit extends Model
     use HasFactory;
     protected $fillable = [
         'unit',
+        'time_in',
+        'time_out'
     ];
 }

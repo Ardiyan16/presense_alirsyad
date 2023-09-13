@@ -19,7 +19,7 @@ class DataUnitController extends Controller
         $draw   = $request->input('draw');
         $search = $request->input('search.value');
 
-        $unitData = Unit::latest();
+        $unitData = Unit::orderBy('id', 'desc');
 
         if (!empty($search)) {
             $unitData = $unitData->where(function ($query) use ($search) {
@@ -54,6 +54,8 @@ class DataUnitController extends Controller
     {
         $simpan = [
             'unit' => $request->unit,
+            'time_in' => $request->time_in,
+            'time_out' => $request->time_out
         ];
 
         $insert = Unit::create($simpan);
@@ -74,9 +76,13 @@ class DataUnitController extends Controller
     {
         $id = $request->id;
         $unit = $request->unit;
+        $time_in = $request->time_in;
+        $time_out = $request->time_out;
 
         $update = [
-            'unit' => $unit
+            'unit' => $unit,
+            'time_in' => $time_in,
+            'time_out' => $time_out
         ];
 
         $proses = Unit::where('id', $id)->update($update);
